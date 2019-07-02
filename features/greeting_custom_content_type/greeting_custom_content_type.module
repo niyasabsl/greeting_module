@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * @file
+ * Code for the greeting custom content type feature.
+ */
+
+include_once 'greeting_custom_content_type.features.inc';

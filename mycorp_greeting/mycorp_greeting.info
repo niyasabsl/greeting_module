@@ -1,0 +1,6 @@
+name = Mycorp Greeting
+description = A new content type of Greeting
+package = Custom
+version = VERSION
+core = 7.x
+dependencies[] = services

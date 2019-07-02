@@ -1,0 +1,16 @@
+name = greeting custom content type
+description = creates greeting content type and its endpoints
+core = 7.x
+package = Features
+dependencies[] = ctools
+dependencies[] = features
+dependencies[] = image
+dependencies[] = mycorp_greeting
+dependencies[] = rest_server
+dependencies[] = services
+features[ctools][] = services:services:3
+features[features_api][] = api:2
+features[field_base][] = greeting_image
+features[field_instance][] = node-greeting-greeting_image
+features[node][] = greeting
+features[services_endpoint][] = greetings_list

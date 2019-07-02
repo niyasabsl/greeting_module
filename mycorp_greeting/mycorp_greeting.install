@@ -1,0 +1,65 @@
+<?php
+
+/**
+ * Implements hook_install().
+ */
+function mycorp_greeting_install()
+{
+	if (!node_type_load('greeting')){
+		$t = get_t();
+		// Define the custom greeting content type
+		$content_type = array(
+			'type'          => 'greeting',
+			'name'          => $t('Greeting'),
+			'description'	=> $t('Creates a new greeting'),
+			'title_label'	=> $t('Greeting title'),
+			'base'          => 'node_content',
+			'custom'        => TRUE,
+		);
+		$node_type = node_type_set_defaults($content_type);
+		node_type_save($node_type);
+
+		// Create greeting image field
+		$greeting_image = array(
+	    'field_name' => 'greeting_image',
+	    'label' => $t('Greeting image'),
+	    'cardinality' => 1,
+	    'type' => 'image',
+	    'settings' => array(
+	      'default_image' => 0,
+	      'uri_scheme' => 'public',
+	    )
+		);
+		field_create_field($greeting_image);
+
+		// Attach image field to greeting content type
+		$greeting_image_instance = array(
+	    'entity_type' => 'node',
+	    'bundle' => 'greeting',
+	  	'field_name' => 'greeting_image',
+	  	'label' => $t('Greeting image'),
+	  	'required' => TRUE,
+	    'widget' => array(
+	      'settings' => array(
+	        'preview_image_style' => 'thumbnail',
+	        'progress_indicator' => 'throbber',
+	      ),
+	    ),
+	    'display' => array(
+	      'default' => array(
+	        'label' => 'hidden',
+	        'type' => 'image',
+	        'settings' => array('image_style' => 'medium', 'image_link' => ''),
+	        'weight' => -1,
+	      ),
+	      'teaser' => array(
+	        'label' => 'hidden',
+	        'type' => 'image',
+	        'settings' => array('image_style' => 'thumbnail', 'image_link' => 'content'),
+	        'weight' => -1,
+	      )
+	    )
+		);
+	  field_create_instance($greeting_image_instance);
+	}
+}

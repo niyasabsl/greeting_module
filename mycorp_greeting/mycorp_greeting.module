@@ -1,0 +1,111 @@
+<?php
+
+/**
+ * Implements hook_services_resources().
+ */
+function mycorp_greeting_services_resources() {
+  return array(
+    'greetings' => array(
+      'operations' => array (
+        'index' => array(
+          'help' => 'Return the list of greetings.',
+          'file' => array('type' => 'inc', 'module' => 'mycorp_greeting', 'name' => 'resources/greeting_resources'),
+          'callback' => '_greeting_resource_list',
+          'access arguments' => array('access content'),
+        ),
+       'retrieve' => array(
+         'help' => 'Return a specific greeting of given id.',
+         'file' => array('type' => 'inc', 'module' => 'mycorp_greeting', 'name' => 'resources/greeting_resources'),
+         'callback' => '_greeting_resource_retrieve',
+         'args' => array(
+           array(
+             'name' => 'nid',
+             'optional' => FALSE,
+             'source' => array('path' => 0),
+             'type' => 'int',
+             'description' => 'The nid of the node to retrieve',
+           ),
+         ),
+         'access arguments' => array('access content'),
+       ),
+       'create' => array(
+         'help' => 'Creates a new greeting.',
+         'file' => array('type' => 'inc', 'module' => 'mycorp_greeting', 'name' => 'resources/greeting_resources'),
+         'callback' => '_greeting_resource_create',
+         'args' => array(
+           array(
+             'name' => 'node',
+             'optional' => FALSE,
+             'source' => 'data',
+             'description' => 'The node data to create',
+             'type' => 'array',
+           ),
+         ),
+         'access arguments' => array('access content'),
+       ),
+       'update' => array(
+         'help' => 'Updates an existing greeting.',
+         'file' => array('type' => 'inc', 'module' => 'mycorp_greeting', 'name' => 'resources/greeting_resources'),
+         'callback' => '_greeting_resource_update',
+         'args' => array(
+           array(
+             'name' => 'nid',
+             'optional' => FALSE,
+             'source' => array('path' => 0),
+             'type' => 'int',
+             'description' => 'The nid of the greeting to update',
+           ),
+           array(
+             'name' => 'node',
+             'optional' => FALSE,
+             'source' => 'data',
+             'description' => 'The greeting node data to update',
+             'type' => 'array',
+           ),
+         ),
+         'access arguments' => array('access content'),
+       ),
+       'delete' => array(
+         'help' => t('Delete an existing greeting.'),
+         'file' => array('type' => 'inc', 'module' => 'mycorp_greeting', 'name' => 'resources/greeting_resources'),
+         'callback' => '_greeting_resource_delete',
+         'args' => array(
+           array(
+             'name' => 'nid',
+             'optional' => FALSE,
+             'source' => array('path' => 0),
+             'type' => 'int',
+             'description' => 'The nid of the node to delete',
+           ),
+         ),
+         'access arguments' => array('access content'),
+       )
+     ),
+     'targeted_actions' => array (
+       'publish' => array(
+         'help' => 'Publish/unpublish a greeting of given id',
+         'file' => array('type' => 'inc', 'module' => 'mycorp_greeting', 'name' => 'resources/greeting_resources'),
+         'callback' => '_greeting_resource_publish',
+         'args' => array(
+           array(
+             'name' => 'nid',
+             'optional' => FALSE,
+             'source' => array('path' => 0),
+             'type' => 'int',
+             'description' => 'The nid of the greeting to publish',
+           ),
+           array(
+             'name' => 'status',
+             'optional' => TRUE,
+             'source' => array('data' => 'status'),
+             'type' => 'int',
+             'description' => 'sets node status',
+             'default value' => 1,
+           )
+         ),
+         'access arguments' => array('access content'),
+       )
+     )
+   )
+ );
+}
